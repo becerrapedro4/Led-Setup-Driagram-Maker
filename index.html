@@ -26,6 +26,15 @@
           <option value="naipix">Naipix</option>
         </select><br>
 
+        <!-- Opción para elegir el tipo de panel solo visible si es Naipix -->
+        <div id="panelSizeWrapper" style="display: none;">
+          <label for="panelSize">Tamaño de panel:</label>
+          <select id="panelSize" name="panelSize">
+            <option value="50x50">50x50</option>
+            <option value="50x100">50x100</option>
+          </select><br>
+        </div>
+
         <button type="submit">Generar grilla</button>
       </form>
     </section>
