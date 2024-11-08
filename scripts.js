@@ -46,13 +46,24 @@ document.getElementById('setupForm').addEventListener('submit', function(e) {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas antes de dibujar
 
+  // Calculamos el tamaño de cada panel en píxeles
   const panelWidthInPixels = canvas.width / numPanelsX;
   const panelHeightInPixels = canvas.height / numPanelsY;
 
-  // Dibujar la grilla de paneles
-  for (let i = 0; i < numPanelsX; i++) {
-    for (let j = 0; j < numPanelsY; j++) {
-      ctx.strokeRect(i * panelWidthInPixels, j * panelHeightInPixels, panelWidthInPixels, panelHeightInPixels);
+  // Asegurarnos de que los paneles sean cuadrados si son 50x50
+  if (panelWidth === panelHeight) {
+    const panelSizeInPixels = Math.min(panelWidthInPixels, panelHeightInPixels);
+    for (let i = 0; i < numPanelsX; i++) {
+      for (let j = 0; j < numPanelsY; j++) {
+        ctx.strokeRect(i * panelSizeInPixels, j * panelSizeInPixels, panelSizeInPixels, panelSizeInPixels);
+      }
+    }
+  } else {
+    // Si no son paneles cuadrados (es decir, 50x100), mantener la proporción
+    for (let i = 0; i < numPanelsX; i++) {
+      for (let j = 0; j < numPanelsY; j++) {
+        ctx.strokeRect(i * panelWidthInPixels, j * panelHeightInPixels, panelWidthInPixels, panelHeightInPixels);
+      }
     }
   }
 
