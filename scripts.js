@@ -30,9 +30,11 @@ document.getElementById('setupForm').addEventListener('submit', function(e) {
   // Ajustar tamaño de panel según la selección
   let panelWidth, panelHeight;
   if (brand === 'absen' || panelSize === '50x50') {
+    // Paneles de 50x50 cm (medio metro)
     panelWidth = 0.5;  // 50x50 cm -> 0.5m
     panelHeight = 0.5; // 50x50 cm -> 0.5m
   } else if (panelSize === '50x100') {
+    // Paneles de 50x100 cm (un metro)
     panelWidth = 0.5;  // 50x100 cm -> 0.5m
     panelHeight = 1;   // 50x100 cm -> 1m
   }
@@ -46,22 +48,33 @@ document.getElementById('setupForm').addEventListener('submit', function(e) {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas antes de dibujar
 
-  // Calculamos el tamaño de cada panel en píxeles
-  const panelWidthInPixels = canvas.width / numPanelsX;
-  const panelHeightInPixels = canvas.height / numPanelsY;
-
-  // Asegurarnos de que los paneles sean cuadrados si son 50x50
+  // Calcular el tamaño de los paneles en píxeles
+  let panelWidthInPixels, panelHeightInPixels;
+  
   if (panelWidth === panelHeight) {
-    const panelSizeInPixels = Math.min(panelWidthInPixels, panelHeightInPixels);
-    for (let i = 0; i < numPanelsX; i++) {
-      for (let j = 0; j < numPanelsY; j++) {
-        ctx.strokeRect(i * panelSizeInPixels, j * panelSizeInPixels, panelSizeInPixels, panelSizeInPixels);
-      }
-    }
+    // Si es un panel 50x50 (cuadrado), dibujamos un cuadrado
+    panelWidthInPixels = Math.min(canvas.width / numPanelsX, canvas.height / numPanelsY);
+    panelHeightInPixels = panelWidthInPixels;  // Aseguramos que sea cuadrado
   } else {
-    // Si no son paneles cuadrados (es decir, 50x100), mantener la proporción
-    for (let i = 0; i < numPanelsX; i++) {
-      for (let j = 0; j < numPanelsY; j++) {
+    // Si es un panel 50x100 (rectangular), calculamos el tamaño en píxeles para mantener la proporción
+    panelWidthInPixels = canvas.width / numPanelsX;  // Ancho proporcional
+    panelHeightInPixels = canvas.height / numPanelsY; // Alto proporcional
+    
+    // Aseguramos que el alto sea proporcional a 2x el ancho para los paneles 50x100
+    if (panelWidth === 0.5 && panelHeight === 1) {
+      // Los paneles de 50x100 cm deben tener la proporción correcta, por eso el alto es el doble que el ancho
+      panelHeightInPixels = panelWidthInPixels * 2;
+    }
+  }
+
+  // Dibujar los paneles respetando sus proporciones
+  for (let i = 0; i < numPanelsX; i++) {
+    for (let j = 0; j < numPanelsY; j++) {
+      if (panelWidth === panelHeight) {
+        // Si es un panel 50x50 (cuadrado), dibujamos un cuadrado
+        ctx.strokeRect(i * panelWidthInPixels, j * panelHeightInPixels, panelWidthInPixels, panelHeightInPixels);
+      } else {
+        // Si es un panel 50x100 (rectangular), respetamos la proporción
         ctx.strokeRect(i * panelWidthInPixels, j * panelHeightInPixels, panelWidthInPixels, panelHeightInPixels);
       }
     }
