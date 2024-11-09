@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Led Setup Tool</title>
+  <title>Led Setup Tool ⚡</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>Led Setup Tool</h1>
+    <h1>Led Setup Tool ⚡</h1>
   </header>
   <main>
     <section>
@@ -26,30 +26,25 @@
           <option value="naipix">Naipix</option>
         </select><br>
 
-        <!-- Opción para elegir el tipo de panel solo visible si es Naipix -->
-        <div id="panelSizeWrapper" style="display: none;">
-          <label for="panelSize">Tamaño de panel:</label>
-          <select id="panelSize" name="panelSize">
-            <option value="50x50">50x50</option>
-            <option value="50x100">50x100</option>
-          </select><br>
-        </div>
+        <label for="panelSize">Tamaño de panel:</label>
+        <select id="panelSize" name="panelSize">
+          <option value="50x50">50x50</option>
+          <option value="50x100">50x100</option>
+        </select><br>
 
         <button type="submit">Generar grilla</button>
       </form>
+      <button id="toggleSelectionButton">Activar Selección</button>
+      <button id="clearSelectionButton">Limpiar Selección</button>
+      <p id="wireInfo">Número de cables: 0 | Consumo total: 0W</p>
     </section>
 
     <section id="gridResult">
       <h2>Grilla de Paneles</h2>
       <canvas id="gridCanvas" width="800" height="600"></canvas>
     </section>
-
-    <section>
-      <h2>Diagrama de Tensión y Señal</h2>
-      <canvas id="diagramCanvas" width="800" height="200"></canvas>
-    </section>
   </main>
 
-  <script src="scripts.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
